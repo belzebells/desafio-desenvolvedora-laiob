@@ -1,8 +1,8 @@
 <div align="center">
 
-# 🛍️ Gerenciador de Produtos
+# 🛍️ Gerenciador de produtos
 
-### Sistema CRUD Full-Stack para Cadastro de Produtos
+### Sistema CRUD Full-Stack para cadastro de produtos
 
 *Desafio Técnico - Desenvolvedor(a) Júnior | LAIOB*
 
@@ -13,7 +13,7 @@
 
 </div>
 
-## 📋 Sobre o Projeto
+## 📋 Sobre o projeto
 
 Sistema completo de gerenciamento de produtos desenvolvido com **React** no frontend e **Go** no backend. A aplicação permite realizar operações CRUD (Create, Read, Update, Delete) de produtos de forma intuitiva e responsiva.
 
@@ -30,7 +30,7 @@ Sistema completo de gerenciamento de produtos desenvolvido com **React** no fron
 🎥 [Assista ao vídeo da aplicação](https://youtu.be/Hec_Ekce_TU)
 - [Apresentação no Canva (com vídeos)](https://www.canva.com/design/DAGzh_49k2Y/eSdN2_t8M6svVA1vY021sg/edit?utm_content=DAGzh_49k2Y&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton)
 
-## 🚀 Tecnologias Utilizadas
+## 🚀 Tecnologias utilizadas
 
 ### Frontend
 - **React** 18.x - Biblioteca para interfaces de usuário
@@ -49,7 +49,7 @@ Sistema completo de gerenciamento de produtos desenvolvido com **React** no fron
 - **Docker Compose** - Orquestração de containers
 - **Multi-stage builds** - Otimização das imagens
 
-## 🏗️ Estrutura do Projeto
+## 🏗️ Estrutura do projeto
 
 desafio-desenvolvedora-laiob/
 
@@ -82,9 +82,9 @@ desafio-desenvolvedora-laiob/
 └── 📄 README.md # Documentação do projeto
 
 
-## ⚙️ Como Executar o Projeto
+## ⚙️ Como Executar o projeto
 
-### 🐳 Método 1: Docker (Recomendado)
+### 🐳 Método 1: Docker (recomendado)
 
 **Pré-requisitos:**
 - Docker Desktop instalado
@@ -112,7 +112,7 @@ docker-compose up --build
   
   ❌ http://localhost:8080 (404 é normal - use os endpoints acima)
 
-### 💻 Método 2: Execução Local
+### 💻 Método 2: execução local
 
 **Pré-requisitos:**
 - Go 1.24+ instalado
@@ -136,9 +136,9 @@ npm install
 npm start
 ````
 
-## 🗄️ Banco de Dados
+## 🗄️ Banco de dados
 
-### Configuração Automática
+### Configuração automática
 
 O banco SQLite é criado automaticamente na primeira execução com a seguinte estrutura:
 CREATE TABLE produtos (
@@ -151,7 +151,7 @@ descricao TEXT NOT NULL
 
 
 
-### Dados de Exemplo
+### Dados de exemplo
 
 A aplicação já vem com produtos pré-cadastrados:
 - Mouse Gamer - R$ 199,90
@@ -169,7 +169,7 @@ A aplicação já vem com produtos pré-cadastrados:
 | PUT | `/produtos/:id` | Atualiza um produto existente |
 | DELETE | `/produtos/:id` | Remove um produto |
 
-### Exemplo de Requisição:
+### Exemplo de requisição:
 
 POST /produtos
 {
@@ -180,7 +180,7 @@ POST /produtos
 }
 
 
-## 🔧 Scripts Disponíveis
+## 🔧 Scripts disponíveis
 
 ### Frontend
 - `npm start` - Executa em modo de desenvolvimento
