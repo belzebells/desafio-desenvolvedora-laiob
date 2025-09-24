@@ -103,7 +103,7 @@ cd desafio-desenvolvedora-laiob
 docker-compose up --build
 ````
 
-4. **Acesse a aplicação:**
+3. **Acesse a aplicação:**
 - **Frontend:** http://localhost:3000
 - **Backend API:** 
   http://localhost:8080/produtos
