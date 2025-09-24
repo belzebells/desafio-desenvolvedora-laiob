@@ -28,6 +28,7 @@ Sistema completo de gerenciamento de produtos desenvolvido com **React** no fron
 - ✅ **Banco de dados** com dados de exemplo pré-carregados
 
 🎥 [Assista ao vídeo da aplicação](https://youtu.be/Hec_Ekce_TU)
+- [Apresentação no Canva (com vídeos)](https://www.canva.com/design/DAGzh_49k2Y/eSdN2_t8M6svVA1vY021sg/edit?utm_content=DAGzh_49k2Y&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton)
 
 ## 🚀 Tecnologias Utilizadas
 
