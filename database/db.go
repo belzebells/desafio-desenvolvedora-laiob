@@ -3,6 +3,7 @@ package database
 import (
 	"database/sql"
 	"log"
+	"os"
 
 	_ "github.com/mattn/go-sqlite3"
 )
@@ -10,8 +11,13 @@ import (
 var DB *sql.DB
 
 func Conectar() {
+	// garante que a pasta exista
+	if err := os.MkdirAll("./data", 0755); err != nil {
+		log.Fatal("Erro ao criar pasta do banco:", err)
+	}
+
 	var err error
-	DB, err = sql.Open("sqlite3", "./produtos.db")
+	DB, err = sql.Open("sqlite3", "./data/produtos.db") // agora usa a pasta data
 	if err != nil {
 		log.Fatal("Erro ao conectar ao banco:", err)
 	}
