@@ -16,7 +16,6 @@ func Conectar() {
 		log.Fatal("Erro ao conectar ao banco:", err)
 	}
 
-	// TESTE A CONEXÃO:
 	if err = DB.Ping(); err != nil {
 		log.Fatal("Erro ao fazer ping no banco:", err)
 	}
@@ -45,14 +44,12 @@ func criarTabela() {
 }
 
 func adicionarDadosTeste() {
-	// Verifica se já tem dados
 	var count int
 	err := DB.QueryRow("SELECT COUNT(*) FROM produtos").Scan(&count)
 	if err != nil {
 		log.Fatal("Erro ao contar produtos:", err)
 	}
 
-	// Se não tem dados, adiciona alguns de teste
 	if count == 0 {
 		produtos := []struct {
 			nome, descricao string

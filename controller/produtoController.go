@@ -8,7 +8,6 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-// GET /produtos → lista todos os produtos
 func ListarProdutos(c *gin.Context) {
 	rows, err := database.DB.Query("SELECT id, nome, preco, quantidade, descricao FROM produtos")
 	if err != nil {
@@ -27,7 +26,6 @@ func ListarProdutos(c *gin.Context) {
 		produtos = append(produtos, p)
 	}
 
-	// Garante que retorna [] e não null
 	if produtos == nil {
 		produtos = []model.Produto{}
 	}
@@ -35,7 +33,6 @@ func ListarProdutos(c *gin.Context) {
 	c.JSON(http.StatusOK, produtos)
 }
 
-// GET /produtos/:id → retorna 1 produto
 func ObterProduto(c *gin.Context) {
 	id := c.Param("id")
 
@@ -51,7 +48,6 @@ func ObterProduto(c *gin.Context) {
 	c.JSON(http.StatusOK, p)
 }
 
-// POST /produtos → cria novo produto
 func CriarProduto(c *gin.Context) {
 	var novo model.Produto
 	if err := c.ShouldBindJSON(&novo); err != nil {
@@ -73,7 +69,6 @@ func CriarProduto(c *gin.Context) {
 	c.JSON(http.StatusCreated, novo)
 }
 
-// PUT /produtos/:id → atualiza um produto
 func AtualizarProduto(c *gin.Context) {
 	id := c.Param("id")
 	var p model.Produto
@@ -94,7 +89,6 @@ func AtualizarProduto(c *gin.Context) {
 	c.JSON(http.StatusOK, gin.H{"message": "Produto atualizado"})
 }
 
-// DELETE /produtos/:id → remove produto
 func DeletarProduto(c *gin.Context) {
 	id := c.Param("id")
 
