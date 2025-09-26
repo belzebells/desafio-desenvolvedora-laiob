@@ -26,12 +26,6 @@ function App() {
       .catch(() => toast.error("❌ Erro ao buscar produtos"));
   };
 
-  const limparFormulario = () => {
-    setFormulario({ nome: '', preco: '', quantidade: '', descricao: '' });
-    setProdutoEditando(null);
-    setMostrarFormulario(false);
-  };
-
   const handleChange = (e) => {
     setFormulario({
       ...formulario,
@@ -50,7 +44,7 @@ function App() {
       .then(() => {
         toast.success("✅ Produto criado com sucesso!");
         listarProdutos();
-        limparFormulario();
+        cancelar();
       })
       .catch(err => {
         toast.error("❌ Erro ao criar produto");
@@ -80,7 +74,7 @@ function App() {
       .then(() => {
         toast.info("✏️ Produto atualizado com sucesso!");
         listarProdutos();
-        limparFormulario();
+        cancelar();
       })
       .catch(err => {
         if (err.response && err.response.status === 404) {
@@ -110,6 +104,18 @@ function App() {
     }
   };
 
+  
+  const cancelar = () => {
+    setMostrarFormulario(false);   
+    setProdutoEditando(null);      
+    setFormulario({                
+      nome: '',
+      preco: '',
+      quantidade: '',
+      descricao: ''
+    });
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
     if (produtoEditando) {
@@ -126,9 +132,12 @@ function App() {
           <h1>🛍 Gerenciador de produtos</h1>
           <button
             className="btn btn-primary"
-            onClick={() => setMostrarFormulario(!mostrarFormulario)}
+            onClick={() => {
+              cancelar();               
+              setMostrarFormulario(true); 
+            }}
           >
-            {mostrarFormulario ? "❌ Cancelar" : "➕ Novo Produto"}
+            ➕ Novo Produto
           </button>
         </header>
 
@@ -195,7 +204,7 @@ function App() {
                 <button
                   type="button"
                   className="btn btn-secondary"
-                  onClick={limparFormulario}
+                  onClick={cancelar}
                 >
                   ❌ Cancelar
                 </button>
