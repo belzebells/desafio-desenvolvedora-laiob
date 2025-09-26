@@ -52,7 +52,10 @@ function App() {
         listarProdutos();
         limparFormulario();
       })
-      .catch(() => toast.error("❌ Erro ao criar produto"));
+      .catch(err => {
+        toast.error("❌ Erro ao criar produto");
+        console.error(err);
+      });
   };
 
   const iniciarEdicao = (produto) => {
@@ -79,7 +82,14 @@ function App() {
         listarProdutos();
         limparFormulario();
       })
-      .catch(() => toast.error("❌ Erro ao atualizar produto"));
+      .catch(err => {
+        if (err.response && err.response.status === 404) {
+          toast.error("⚠️ Produto não encontrado (pode já ter sido deletado)");
+        } else {
+          toast.error("❌ Erro ao atualizar produto");
+        }
+        console.error(err);
+      });
   };
 
   const deletarProduto = (id, nome) => {
@@ -89,7 +99,14 @@ function App() {
           toast.warn("🗑️ Produto excluído com sucesso!");
           listarProdutos();
         })
-        .catch(() => toast.error("❌ Erro ao excluir produto"));
+        .catch(err => {
+          if (err.response && err.response.status === 404) {
+            toast.error("⚠️ Produto já não existe (provavelmente já foi deletado)");
+          } else {
+            toast.error("❌ Erro ao excluir produto");
+          }
+          console.error(err);
+        });
     }
   };
 

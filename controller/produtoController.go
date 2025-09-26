@@ -1,6 +1,7 @@
 package controller
 
 import (
+	"database/sql"
 	"net/http"
 
 	"github.com/belzebells/desafio-desenvolvedora-laiob/database"
@@ -11,7 +12,7 @@ import (
 func ListarProdutos(c *gin.Context) {
 	rows, err := database.DB.Query("SELECT id, nome, preco, quantidade, descricao FROM produtos")
 	if err != nil {
-		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "Erro ao listar produtos"})
 		return
 	}
 	defer rows.Close()
@@ -20,7 +21,7 @@ func ListarProdutos(c *gin.Context) {
 	for rows.Next() {
 		var p model.Produto
 		if err := rows.Scan(&p.ID, &p.Nome, &p.Preco, &p.Quantidade, &p.Descricao); err != nil {
-			c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+			c.JSON(http.StatusInternalServerError, gin.H{"error": "Erro ao processar produtos"})
 			return
 		}
 		produtos = append(produtos, p)
@@ -41,7 +42,11 @@ func ObterProduto(c *gin.Context) {
 		Scan(&p.ID, &p.Nome, &p.Preco, &p.Quantidade, &p.Descricao)
 
 	if err != nil {
-		c.JSON(http.StatusNotFound, gin.H{"message": "Produto não encontrado"})
+		if err == sql.ErrNoRows {
+			c.JSON(http.StatusNotFound, gin.H{"error": "Produto não encontrado"})
+		} else {
+			c.JSON(http.StatusInternalServerError, gin.H{"error": "Erro ao buscar produto"})
+		}
 		return
 	}
 
@@ -51,7 +56,7 @@ func ObterProduto(c *gin.Context) {
 func CriarProduto(c *gin.Context) {
 	var novo model.Produto
 	if err := c.ShouldBindJSON(&novo); err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Dados inválidos"})
 		return
 	}
 
@@ -59,7 +64,7 @@ func CriarProduto(c *gin.Context) {
 		novo.Nome, novo.Preco, novo.Quantidade, novo.Descricao)
 
 	if err != nil {
-		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "Erro ao criar produto"})
 		return
 	}
 
@@ -74,15 +79,21 @@ func AtualizarProduto(c *gin.Context) {
 	var p model.Produto
 
 	if err := c.ShouldBindJSON(&p); err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Dados inválidos"})
 		return
 	}
 
-	_, err := database.DB.Exec("UPDATE produtos SET nome=?, preco=?, quantidade=?, descricao=? WHERE id=?",
+	res, err := database.DB.Exec("UPDATE produtos SET nome=?, preco=?, quantidade=?, descricao=? WHERE id=?",
 		p.Nome, p.Preco, p.Quantidade, p.Descricao, id)
 
 	if err != nil {
-		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "Erro ao atualizar produto"})
+		return
+	}
+
+	rows, _ := res.RowsAffected()
+	if rows == 0 {
+		c.JSON(http.StatusNotFound, gin.H{"error": "Produto não encontrado"})
 		return
 	}
 
@@ -92,9 +103,15 @@ func AtualizarProduto(c *gin.Context) {
 func DeletarProduto(c *gin.Context) {
 	id := c.Param("id")
 
-	_, err := database.DB.Exec("DELETE FROM produtos WHERE id=?", id)
+	res, err := database.DB.Exec("DELETE FROM produtos WHERE id=?", id)
 	if err != nil {
-		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "Erro ao deletar produto"})
+		return
+	}
+
+	rows, _ := res.RowsAffected()
+	if rows == 0 {
+		c.JSON(http.StatusNotFound, gin.H{"error": "Produto não encontrado"})
 		return
 	}
 
