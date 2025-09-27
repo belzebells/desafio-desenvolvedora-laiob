@@ -141,7 +141,7 @@ function App() {
           </button>
         </header>
 
-        {/* Formulário */}
+        {}
         {mostrarFormulario && (
           <div className="formulario-container">
             <h2>{produtoEditando ? "✏ Editar Produto" : "➕ Novo Produto"}</h2>
@@ -213,7 +213,7 @@ function App() {
           </div>
         )}
 
-        {/* Lista de produtos */}
+        {}
         <div className="produtos-container">
           <h2>📦 Lista de produtos ({produtos.length})</h2>
 
